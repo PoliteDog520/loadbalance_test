@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: client-grpc-services
+spec:
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 8080
+#      nodePort: 30308
+#      targetPort: client-grpc
+  selector:
+    app: client-grpc
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-grpc
+spec:
+  selector:
+    matchLabels:
+      app: client-grpc
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: client-grpc
+    spec:
+      containers:
+        - name: client-grpc
+          image: client-grpc-example

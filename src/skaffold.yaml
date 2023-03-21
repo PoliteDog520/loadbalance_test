@@ -1,0 +1,22 @@
+apiVersion: skaffold/v2beta7
+kind: Config
+build:
+  artifacts:
+    - image: api-server-example
+      docker:
+        dockerfile: Dockerfile
+
+    - image: client-http-example
+      docker:
+        dockerfile: Dockerfile-ClientHttp
+
+    - image: client-grpc-example
+      docker:
+        dockerfile: Dockerfile-ClientGRPC
+
+deploy:
+  kubectl:
+    manifests:
+      - server.yaml
+      - client-http.yaml
+      - client-grpc.yaml
